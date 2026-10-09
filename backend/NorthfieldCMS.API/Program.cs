@@ -100,11 +100,11 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Ensure Database & Seed Data on Startup
+// Apply EF Core Migrations & Seed Data on Startup
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.EnsureCreated();
+    db.Database.Migrate();
 }
 
 // HTTP Request Pipeline Configuration

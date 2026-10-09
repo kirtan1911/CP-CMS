@@ -28,10 +28,10 @@ namespace NorthfieldCMS.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Pre-hashed passwords using BCrypt
-            string adminHash = BCrypt.Net.BCrypt.HashPassword("admin123");
-            string facultyHash = BCrypt.Net.BCrypt.HashPassword("faculty123");
-            string studentHash = BCrypt.Net.BCrypt.HashPassword("student123");
+            // Pre-hashed passwords using BCrypt (Static hashes to ensure deterministic EF Core migrations)
+            const string adminHash = "$2a$11$KDt1JeSelReBn2NuOOOZWOoOD2epPdSCkzuCB.1C9gZOmZLCUyQB2";
+            const string facultyHash = "$2a$11$2LGwlZ4fOxBjIX96p74OreFUxdwpcBhH6O9evcHkJF1x13IPgwfFW";
+            const string studentHash = "$2a$11$cuvg/FToBh2KswPM0PmL3.oogYD9AhXBJHxmIJN4TXXmFEMciSSr.";
 
             // Seed Users
             modelBuilder.Entity<User>().HasData(
