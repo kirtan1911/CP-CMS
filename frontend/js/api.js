@@ -198,8 +198,14 @@ const API = {
   }
 };
 
-// Automatically fetch dynamic data on DOM Content Loaded
+// Automatically fetch dynamic data & check auth guard on DOM Content Loaded
 document.addEventListener('DOMContentLoaded', () => {
+  const isLoginPage = window.location.pathname.toLowerCase().endsWith('login.html');
+  const token = API.getToken();
+  if (!token && !isLoginPage) {
+    window.location.href = 'login.html';
+    return;
+  }
   if (typeof currentPage !== 'undefined') {
     API.loadDynamicData(currentPage);
   }

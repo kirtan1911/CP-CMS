@@ -1,5 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,12 +18,14 @@ namespace NorthfieldCMS.API.Services
     {
         private readonly ApplicationDbContext _db;
         private readonly IConfiguration _config;
+        private readonly IEmailService _emailService;
         private static readonly Random _random = new Random();
 
-        public AuthService(ApplicationDbContext db, IConfiguration config)
+        public AuthService(ApplicationDbContext db, IConfiguration config, IEmailService emailService)
         {
             _db = db;
             _config = config;
+            _emailService = emailService;
         }
 
         public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
@@ -109,6 +112,16 @@ namespace NorthfieldCMS.API.Services
             _db.PasswordResetOtps.Add(otpRecord);
             await _db.SaveChangesAsync();
 
+            // Send Email via EmailService
+            try
+            {
+                await _emailService.SendOtpEmailAsync(cleanEmail, user.FullName, otpCode);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[AuthService]: Email sending warning: {ex.Message}");
+            }
+
             Console.WriteLine($"[OTP ENGINE]: Generated OTP {otpCode} for {cleanEmail}, valid until {expiresAt}");
 
             return new OtpResponseDto
@@ -182,10 +195,10 @@ namespace NorthfieldCMS.API.Services
 
         private AuthResponseDto GenerateAuthResponse(User user, string message)
         {
-            var jwtSecret = _config["JwtSettings:Secret"] ?? "NorthfieldCMS_SuperSecretKey_Jwt_Auth_2026_KeyString_32BytesMin!";
-            var issuer = _config["JwtSettings:Issuer"] ?? "NorthfieldCMS.API";
-            var audience = _config["JwtSettings:Audience"] ?? "NorthfieldCMS.Client";
-            var expiryMinutes = double.Parse(_config["JwtSettings:ExpiryMinutes"] ?? "1440");
+            var jwtSecret = _config["Jwt:Key"] ?? _config["JwtSettings:Secret"] ?? "NorthfieldCMS_SuperSecretKey_Jwt_Auth_2026_KeyString_32BytesMin!";
+            var issuer = _config["Jwt:Issuer"] ?? _config["JwtSettings:Issuer"] ?? "CollegeManagementSystem";
+            var audience = _config["Jwt:Audience"] ?? _config["JwtSettings:Audience"] ?? "CollegeManagementSystemUsers";
+            var expiryMinutes = double.Parse(_config["Jwt:DurationInMinutes"] ?? _config["JwtSettings:ExpiryMinutes"] ?? "1440");
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

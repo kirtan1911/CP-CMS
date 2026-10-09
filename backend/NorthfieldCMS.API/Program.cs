@@ -16,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // 2. Dependency Injection Services
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IChatbotService, GeminiChatbotService>();
 
 // 3. Controllers & JSON Options
