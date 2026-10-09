@@ -22,6 +22,11 @@ namespace NorthfieldCMS.API.Services
         public async Task<ChatResponseDto> GetChatResponseAsync(ChatRequestDto request)
         {
             string apiKey = _config["GeminiSettings:ApiKey"] ?? "";
+            if (string.IsNullOrWhiteSpace(apiKey) || apiKey == "[ENCRYPTION_KEY]")
+            {
+                apiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY") ?? "";
+            }
+
             string prompt = request.Message?.Trim() ?? "";
 
             if (string.IsNullOrWhiteSpace(prompt))
@@ -29,6 +34,16 @@ namespace NorthfieldCMS.API.Services
                 return new ChatResponseDto
                 {
                     Reply = "Hello! I am your Northfield CMS AI Assistant. How can I assist you today with courses, attendance, exams, or college records?",
+                    Success = true
+                };
+            }
+
+            // If API key is placeholder or empty, use smart contextual response immediately
+            if (string.IsNullOrWhiteSpace(apiKey) || apiKey == "[ENCRYPTION_KEY]")
+            {
+                return new ChatResponseDto
+                {
+                    Reply = GetFallbackResponse(prompt),
                     Success = true
                 };
             }

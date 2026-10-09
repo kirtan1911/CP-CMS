@@ -87,8 +87,9 @@ Use any of the pre-configured credentials below to test different role permissio
 
 ---
 
-## 🏛 Architecture
+## 🏛 Architecture & End-to-End Request Lifecycle
 
+### 1️⃣ System Component Overview
 ```mermaid
 graph TD
     A[Client Web Browser - HTML/CSS/JS] -->|AJAX HTTP/JSON| B[ASP.NET Core 10 Web API]
@@ -98,6 +99,44 @@ graph TD
     B -->|Post Chat Message| F[Gemini Chatbot Service]
     F -->|REST Request| G[Google Gemini API]
     B -->|OpenAPI Documentation| H[Swagger UI /swagger]
+```
+
+### 2️⃣ Interactive Request & Response Flow Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as 👤 Student/Faculty Client
+    participant UI as 🎨 Frontend AJAX (api.js)
+    participant API as ⚡ ASP.NET Core API
+    participant JWT as 🔐 Auth & Claims
+    participant EF as 🗄️ EF Core & SQLite
+    participant AI as 🤖 Gemini AI Service
+
+    Note over User, AI: 🔄 PHASE 1: Authentication & Token Issuance (POST Request)
+    User->>UI: Input Credentials (email, password)
+    UI->>API: 📩 POST /api/auth/login { email, password }
+    API->>JWT: Verify BCrypt Hash & Claims
+    JWT-->>API: Sign & Issue JWT Bearer Token (24h Expiry)
+    API-->>UI: 📤 200 OK Response { token: "eyJhbG...", role: "Student" }
+    UI->>UI: Save JWT Token in LocalStorage
+
+    Note over User, AI: 🔄 PHASE 2: Fetching Academic Data (GET Request with Bearer Token)
+    User->>UI: Navigate to Courses / Exam Schedule
+    UI->>API: 📩 GET /api/courses (Header: Authorization: Bearer <token>)
+    API->>JWT: Validate Bearer Token Signature & Lifetime
+    API->>EF: Query DbSet<Course> from SQLite Database
+    EF-->>API: Return IEnumerable<Course> Entities
+    API-->>UI: 📤 200 OK Response [ { code: "CS501", name: "DBMS", credits: 4 } ]
+    UI->>User: Render Dynamic Liquid Glass Data Cards
+
+    Note over User, AI: 🔄 PHASE 3: AI Assistant Interaction (POST Query Flow)
+    User->>UI: Ask Chatbot: "When do Mid-Semester exams start?"
+    UI->>API: 📩 POST /api/chatbot/chat { message, context }
+    API->>AI: Forward prompt to Gemini API / Context Engine
+    AI-->>API: Generate Structured Answer
+    API-->>UI: 📤 200 OK Response { reply: "Mid-Semester exams begin Aug 20, 2026..." }
+    UI->>User: Stream Live Chat Bubble Response
 ```
 
 ---
