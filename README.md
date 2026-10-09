@@ -1,151 +1,212 @@
 <div align="center">
 
-  <h1>🎓 Northfield College Management System (CP-CMS)</h1>
-  <p><b>Next-Gen AI-Powered Enterprise Academic & College Management ERP</b></p>
+  <!-- GLOWING TOP BANNER CARD -->
+  <a href="https://github.com/kirtan1911/CP-CMS">
+    <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=14,24,34&height=220&section=header&text=Northfield%20CMS%20&fontSize=48&fontColor=ffffff&animation=twinkling&desc=Next-Gen%20AI-Powered%20Academic%20%26%20College%20ERP%20Portal&descSize=18&descAlignY=66" width="100%" alt="Northfield CMS Banner" />
+  </a>
 
-  <p>
-    <a href="https://github.com/kirtan1911/CP-CMS"><img src="https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10"></a>
-    <a href="https://github.com/kirtan1911/CP-CMS"><img src="https://img.shields.io/badge/ASP.NET_Core-Web_API-512BD4?style=for-the-badge&logo=dotnet" alt="ASP.NET Core"></a>
-    <a href="https://github.com/kirtan1911/CP-CMS"><img src="https://img.shields.io/badge/Entity_Framework-Core-512BD4?style=for-the-badge&logo=nuget" alt="EF Core"></a>
-    <a href="https://github.com/kirtan1911/CP-CMS"><img src="https://img.shields.io/badge/Google_Gemini-AI_2.5-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini AI"></a>
-    <a href="https://github.com/kirtan1911/CP-CMS"><img src="https://img.shields.io/badge/Frontend-HTML5_%7C_CSS3_%7C_JS-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5 CSS3 JS"></a>
-    <a href="https://github.com/kirtan1911/CP-CMS"><img src="https://img.shields.io/badge/Swagger-OpenAPI_v1-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger"></a>
-  </p>
+  <br><br>
 
-  <br>
-
+  <!-- TECH STACK BADGES MATRIX -->
   <p align="center">
-    <a href="#-key-features"><b>Key Features</b></a> •
-    <a href="#-demo-credentials"><b>Demo Accounts</b></a> •
-    <a href="#-quick-start"><b>Quick Start</b></a> •
-    <a href="#-architecture"><b>Architecture</b></a> •
-    <a href="#-swagger-api"><b>Swagger API</b></a> •
-    <a href="#-ai-chatbot"><b>AI Chatbot</b></a>
+    <a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/.NET-10.0-7c3aed?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10"></a>
+    <a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/ASP.NET_Core-Web_API-22d3ee?style=for-the-badge&logo=dotnet&logoColor=black" alt="ASP.NET Core"></a>
+    <a href="https://learn.microsoft.com/ef/core/"><img src="https://img.shields.io/badge/EF_Core-SQLite_DB-22c55e?style=for-the-badge&logo=sqlite&logoColor=white" alt="EF Core"></a>
+    <a href="https://ai.google.dev/"><img src="https://img.shields.io/badge/Google_Gemini-AI_2.5-f59e0b?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini AI"></a>
+    <a href="https://swagger.io/"><img src="https://img.shields.io/badge/Swagger-OpenAPI_v1-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger"></a>
+    <a href="https://github.com/kirtan1911/CP-CMS"><img src="https://img.shields.io/badge/License-MIT-ef4444?style=for-the-badge" alt="MIT License"></a>
   </p>
+
+  <!-- QUICK NAVIGATION PILLS -->
+  <p align="center">
+    <a href="#-overview"><b>✨ Overview</b></a> •
+    <a href="#-key-features"><b>🚀 Features</b></a> •
+    <a href="#-demo-credentials"><b>🔑 Demo Credentials</b></a> •
+    <a href="#-architecture--end-to-end-request-lifecycle"><b>🏛 Architecture</b></a> •
+    <a href="#-swagger-api-matrix"><b>📖 Swagger API</b></a> •
+    <a href="#-gemini-ai-assistant"><b>🤖 AI Assistant</b></a> •
+    <a href="#-quick-start-guide"><b>⚡ Quick Start</b></a>
+  </p>
+
 </div>
 
 ---
 
-## 🌟 Overview
+<a id="-overview"></a>
+## ✨ Overview
 
-**Northfield College Management System (CP-CMS)** is a state-of-the-art, full-stack Academic ERP platform designed for modern educational institutions. Featuring an **ASP.NET Core (.NET 10) RESTful Web API** backend, **Entity Framework Core with SQLite**, **JWT Bearer Authentication**, and a **Liquid Glassmorphism Web Frontend**, CP-CMS integrates an **AI Chatbot powered by Google Gemini** for instantaneous academic query resolutions.
+> **Northfield College Management System (CP-CMS)** is a premium, full-stack Academic ERP platform designed for modern universities and colleges. Built with a high-performance **ASP.NET Core (.NET 10) RESTful Web API** backend, **Entity Framework Core with SQLite**, **JWT Bearer Authentication**, and an **Apple-inspired Liquid Glassmorphism UI**, CP-CMS includes a **Google Gemini-powered AI Chatbot** for instant academic Q&A.
 
----
+<br>
 
+<a id="-key-features"></a>
 ## 🚀 Key Features
 
-<table>
+<table width="100%">
   <tr>
-    <td width="50%">
-      <h3>🔐 Authentication & Security</h3>
-      <ul>
-        <li><b>BCrypt Hashing</b> with auto-salt verification for passwords.</li>
-        <li><b>JWT Bearer Authentication</b> signed claims & expiration handling.</li>
-        <li><b>3-Tier Role Access Control</b> (Admin, Faculty, Student).</li>
-      </ul>
+    <td width="50%" valign="top">
+      <div align="left">
+        <h3>🔐 Authentication & Role Security</h3>
+        <ul>
+          <li><b>BCrypt Hashing:</b> Passwords hashed using salted BCrypt encryption.</li>
+          <li><b>JWT Bearer Tokens:</b> Signed JWT tokens with role claims & 24h expiration.</li>
+          <li><b>3-Role Access Control:</b> Tailored views for <b>Admin</b>, <b>Faculty</b>, and <b>Students</b>.</li>
+        </ul>
+      </div>
     </td>
-    <td width="50%">
-      <h3>🤖 Gemini AI Assistant</h3>
-      <ul>
-        <li>Integrated <b>Google Gemini 2.5</b> model for instant Q&A.</li>
-        <li>Dedicated <code>chatbot.html</code> page & floating widget.</li>
-        <li>Context-aware responses for exams, fees, and attendance.</li>
-      </ul>
+    <td width="50%" valign="top">
+      <div align="left">
+        <h3>🤖 Google Gemini AI Assistant</h3>
+        <ul>
+          <li><b>Gemini 2.5 Flash API Integration:</b> Natural language response generation.</li>
+          <li><b>Dedicated AI Page:</b> Fullscreen <code>chatbot.html</code> & floating widget.</li>
+          <li><b>Context-Aware Engine:</b> Intelligent fallback responses for offline/demo modes.</li>
+        </ul>
+      </div>
     </td>
   </tr>
   <tr>
-    <td width="50%">
-      <h3>📊 Operations & Analytics</h3>
-      <ul>
-        <li>Course registration, timetable & department tracking.</li>
-        <li>Student attendance tracking with percentage thresholds.</li>
-        <li>Mid-term & Final exam scheduling with result processing.</li>
-      </ul>
+    <td width="50%" valign="top">
+      <div align="left">
+        <h3>📊 Academic & Operational ERP</h3>
+        <ul>
+          <li><b>Student & Faculty Management:</b> Real-time user directory & status tracking.</li>
+          <li><b>Attendance & Exam Management:</b> Threshold checks, timetables, and results.</li>
+          <li><b>Tuition Fee System:</b> Paid vs Pending fee breakdown per course.</li>
+        </ul>
+      </div>
     </td>
-    <td width="50%">
-      <h3>🎨 Premium Liquid Glass UI</h3>
-      <ul>
-        <li>Apple-inspired <b>Liquid Glassmorphism</b> aesthetic.</li>
-        <li>Responsive sidebar, dark mode design tokens, dynamic charts.</li>
-        <li>AJAX integration connecting frontend directly to backend APIs.</li>
-      </ul>
+    <td width="50%" valign="top">
+      <div align="left">
+        <h3>🎨 Liquid Glassmorphism UI</h3>
+        <ul>
+          <li><b>Modern Glass Skins:</b> Translucent blurred panels, ambient glowing drifting light.</li>
+          <li><b>Dynamic AJAX Client:</b> Centralized <code>api.js</code> connecting UI directly to Web API.</li>
+          <li><b>Fully Responsive:</b> Mobile drawer sidebar & desktop dashboard.</li>
+        </ul>
+      </div>
     </td>
   </tr>
 </table>
 
----
+<br>
 
-## 🔑 Pre-seeded Demo Accounts
+<a id="-demo-credentials"></a>
+## 🔑 Pre-Seeded Demo Accounts
 
-Use any of the pre-configured credentials below to test different role permissions:
+Test the system instantly using any of the pre-configured accounts below:
 
-| Role | Full Name | Email Address | Password | Privileges |
+| Role | Full Name | Email Address | Password | Privileges & Capabilities |
 | :--- | :--- | :--- | :--- | :--- |
-| <span id="admin-badge"><b>ADMIN</b></span> | Prof. Rajesh Kumar | `admin@northfield.edu` | `admin123` | Full system governance, user management, course & department creation |
-| <span id="faculty-badge"><b>FACULTY</b></span> | Dr. Meera Shah | `meera.shah@northfield.edu` | `faculty123` | Course teaching, exam scheduling, attendance recording & marks entry |
-| <span id="student-badge"><b>STUDENT</b></span> | Riya Mehta | `riya.mehta@northfield.edu` | `student123` | View enrolled courses, check attendance %, fee dues & exam results |
+| <img src="https://img.shields.io/badge/ADMIN-7c3aed?style=for-the-badge&logoColor=white" alt="Admin Badge"> | **Prof. Rajesh Kumar** | `admin@northfield.edu` | `admin123` | Full system control, user creation, course & department setup |
+| <img src="https://img.shields.io/badge/FACULTY-22d3ee?style=for-the-badge&logoColor=black" alt="Faculty Badge"> | **Dr. Meera Shah** | `meera.shah@northfield.edu` | `faculty123` | Exam scheduling, attendance marking, student result entry |
+| <img src="https://img.shields.io/badge/STUDENT-22c55e?style=for-the-badge&logoColor=white" alt="Student Badge"> | **Riya Mehta** | `riya.mehta@northfield.edu` | `student123` | View enrolled courses, check attendance %, fee dues & exam dates |
 
----
+<br>
 
+<a id="-architecture--end-to-end-request-lifecycle"></a>
 ## 🏛 Architecture & End-to-End Request Lifecycle
 
-### 1️⃣ System Component Overview
+### 1️⃣ High-Level System Architecture
+
 ```mermaid
-graph TD
-    A[Client Web Browser - HTML/CSS/JS] -->|AJAX HTTP/JSON| B[ASP.NET Core 10 Web API]
-    B -->|JWT Authentication| C[Auth Service & BCrypt]
-    B -->|CRUD Controllers| D[Entity Framework Core]
-    D -->|SQLite Database| E[(northfield_cms.db)]
-    B -->|Post Chat Message| F[Gemini Chatbot Service]
-    F -->|REST Request| G[Google Gemini API]
-    B -->|OpenAPI Documentation| H[Swagger UI /swagger]
+flowchart LR
+    classDef client fill:#1e1b4b,stroke:#7c3aed,stroke-width:2px,color:#fff;
+    classDef api fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#fff;
+    classDef auth fill:#14532d,stroke:#22c55e,stroke-width:2px,color:#fff;
+    classDef db fill:#451a03,stroke:#f59e0b,stroke-width:2px,color:#fff;
+    classDef ai fill:#701a75,stroke:#e879f9,stroke-width:2px,color:#fff;
+
+    Client["🎨 Web Frontend<br>(HTML5 / CSS3 / JS / AJAX)"]:::client
+    API["⚡ ASP.NET Core 10 Web API<br>(NorthfieldCMS.API)"]:::api
+    Auth["🔐 AuthService<br>(BCrypt + JWT Bearer)"]:::auth
+    EF["🗄️ EF Core DbContext<br>(SQLite Engine)"]:::db
+    Gemini["🤖 GeminiChatbotService<br>(Google Gemini API)"]:::ai
+
+    Client -->|AJAX JSON Request| API
+    API -->|Authenticate Claims| Auth
+    API -->|Query / Mutate| EF
+    API -->|Send Prompt| Gemini
 ```
 
-### 2️⃣ Interactive Request & Response Flow Sequence
+<br>
+
+### 2️⃣ Step-by-Step Request & Response Sequence Flow
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as 👤 Student/Faculty Client
-    participant UI as 🎨 Frontend AJAX (api.js)
-    participant API as ⚡ ASP.NET Core API
+    actor User as 👤 Client (Browser)
+    participant UI as 🎨 AJAX Client (api.js)
+    participant API as ⚡ Web API (.NET 10)
     participant JWT as 🔐 Auth & Claims
-    participant EF as 🗄️ EF Core & SQLite
+    participant EF as 🗄️ EF Core (SQLite)
     participant AI as 🤖 Gemini AI Service
 
-    Note over User, AI: 🔄 PHASE 1: Authentication & Token Issuance (POST Request)
-    User->>UI: Input Credentials (email, password)
+    Note over User, AI: 🔄 PHASE 1: Authentication & Token Generation (POST Request)
+    User->>UI: Submit Login Form (Email & Password)
     UI->>API: 📩 POST /api/auth/login { email, password }
-    API->>JWT: Verify BCrypt Hash & Claims
-    JWT-->>API: Sign & Issue JWT Bearer Token (24h Expiry)
+    API->>JWT: Validate Credentials & Verify BCrypt Hash
+    JWT-->>API: Issue Signed JWT Token (24h Expiry)
     API-->>UI: 📤 200 OK Response { token: "eyJhbG...", role: "Student" }
-    UI->>UI: Save JWT Token in LocalStorage
+    UI->>UI: Store Token in LocalStorage
 
-    Note over User, AI: 🔄 PHASE 2: Fetching Academic Data (GET Request with Bearer Token)
+    Note over User, AI: 🔄 PHASE 2: Data Fetching with Bearer Token (GET Request)
     User->>UI: Navigate to Courses / Exam Schedule
-    UI->>API: 📩 GET /api/courses (Header: Authorization: Bearer <token>)
-    API->>JWT: Validate Bearer Token Signature & Lifetime
-    API->>EF: Query DbSet<Course> from SQLite Database
-    EF-->>API: Return IEnumerable<Course> Entities
-    API-->>UI: 📤 200 OK Response [ { code: "CS501", name: "DBMS", credits: 4 } ]
-    UI->>User: Render Dynamic Liquid Glass Data Cards
+    UI->>API: 📩 GET /api/courses (Header: Authorization: Bearer <Token>)
+    API->>JWT: Validate JWT Signature & Roles
+    API->>EF: Query Courses DbSet from SQLite
+    EF-->>API: Return IEnumerable<Course>
+    API-->>UI: 📤 200 OK Response [ { code: "CS501", name: "DBMS" } ]
+    UI->>User: Render Glassmorphism Data Cards
 
-    Note over User, AI: 🔄 PHASE 3: AI Assistant Interaction (POST Query Flow)
-    User->>UI: Ask Chatbot: "When do Mid-Semester exams start?"
+    Note over User, AI: 🔄 PHASE 3: AI Chatbot Query Stream (POST Request)
+    User->>UI: Ask: "When do Mid-Semester exams start?"
     UI->>API: 📩 POST /api/chatbot/chat { message, context }
-    API->>AI: Forward prompt to Gemini API / Context Engine
-    AI-->>API: Generate Structured Answer
+    API->>AI: Send Prompt to Gemini 2.5 API
+    AI-->>API: Return AI Reply Text
     API-->>UI: 📤 200 OK Response { reply: "Mid-Semester exams begin Aug 20, 2026..." }
-    UI->>User: Stream Live Chat Bubble Response
+    UI->>User: Stream Live Chat Bubble
 ```
 
----
+<br>
 
+<a id="-swagger-api-matrix"></a>
+## 📖 Swagger API Matrix
+
+Explore and test all RESTful Web API endpoints interactively at `http://localhost:5116/swagger`:
+
+| Method | Endpoint | Authorization | Description |
+| :---: | :--- | :---: | :--- |
+| <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/auth/login` | Public | Authenticates user & issues signed JWT Token |
+| <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/auth/register` | Public | Registers new system user account |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/auth/me` | <img src="https://img.shields.io/badge/Bearer_JWT-22d3ee?style=flat" alt="JWT"> | Returns current authenticated user claims |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/users` | Public | Retrieves system users list |
+| <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/users` | <img src="https://img.shields.io/badge/Admin-7c3aed?style=flat" alt="Admin"> | Creates new system user |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/students` | Public | Retrieves enrolled students list |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/faculty` | Public | Retrieves faculty members list |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/courses` | Public | Retrieves academic courses catalog |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/departments` | Public | Retrieves college departments |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/exams` | Public | Retrieves examination timetables |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/fees` | Public | Retrieves student fee payment status |
+| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/materials` | Public | Retrieves uploaded course study materials |
+| <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/chatbot/chat` | Public | Submits prompt to Gemini AI Chatbot |
+
+<br>
+
+<a id="-gemini-ai-assistant"></a>
+## 🤖 Dedicated Gemini AI Assistant Page
+
+Access the dedicated AI Chatbot interface at `frontend/chatbot.html`:
+
+- **Quick Action Prompt Chips:** Instant answers for Exam Timetables, Attendance Percentage, Fee Payments, and Faculty Info.
+- **Typing Indicators:** Visual animated loading state during response generation.
+- **Smart Fallback Engine:** Offline context processing ensuring uninterrupted uptime even without active network keys.
+
+<br>
+
+<a id="-quick-start-guide"></a>
 ## ⚡ Quick Start Guide
-
-### Prerequisites
-- [.NET 10.0 SDK](https://dotnet.microsoft.com/download)
-- Web Browser (Chrome, Edge, Firefox, or Safari)
 
 ### 1️⃣ Clone the Repository
 ```bash
@@ -153,77 +214,44 @@ git clone https://github.com/kirtan1911/CP-CMS.git
 cd CP-CMS
 ```
 
-### 2️⃣ Run ASP.NET Core Backend Web API
+### 2️⃣ Run ASP.NET Core Web API
 ```bash
 cd backend/NorthfieldCMS.API
 dotnet run --urls "http://localhost:5116"
 ```
-> The API server will start listening on `http://localhost:5116`. Database tables and initial seed data will automatically initialize!
 
-### 3️⃣ Launch Web Frontend & Swagger UI
-- **Swagger Documentation**: Open `http://localhost:5116/swagger` in your browser.
-- **Web App Interface**: Open `frontend/login.html` or `frontend/dashboard.html` in your web browser.
-- **Dedicated AI Chatbot**: Open `frontend/chatbot.html` in your web browser.
+### 3️⃣ Launch Web App & Swagger
+- **Swagger Documentation:** Open `http://localhost:5116/swagger`
+- **Web Frontend:** Open `frontend/login.html` or `frontend/dashboard.html`
+- **Dedicated AI Chatbot:** Open `frontend/chatbot.html`
 
----
+<br>
 
-## 📖 Swagger API Endpoints Guide
-
-Access interactive OpenAPI documentation directly at `http://localhost:5116/swagger`:
-
-```
-POST   /api/auth/login            # User login & JWT issuance
-POST   /api/auth/register         # User registration
-GET    /api/auth/me               # Current authenticated user details
-
-GET    /api/users                 # Fetch system users list (Admin)
-GET    /api/students              # Fetch enrolled students list
-GET    /api/faculty               # Fetch faculty members list
-GET    /api/courses               # Fetch academic courses list
-GET    /api/departments           # Fetch college departments
-GET    /api/exams                 # Fetch exam schedules
-GET    /api/fees                  # Fetch fee payment records
-GET    /api/notifications         # Fetch system notifications
-GET    /api/materials             # Fetch course study materials
-
-POST   /api/chatbot/chat          # Send query to Gemini AI Chatbot
-```
-
----
-
-## 🤖 Dedicated Gemini AI Assistant Page
-
-CP-CMS includes a dedicated AI Assistant page (`frontend/chatbot.html`) with:
-- **Interactive Preset Chips**: One-click prompts for Exam Schedules, Attendance Check, Fee Dues, and Faculty Directory.
-- **Real-Time Stream**: Live response generation with typing indicators.
-- **Smart Fallback Engine**: Uninterrupted offline context handling when network or API rate limits occur.
-
----
-
-## 📁 Project Structure
+<a id="-project-structure"></a>
+## 📁 Project Folder Structure
 
 ```
 CP-CMS/
 ├── backend/
 │   └── NorthfieldCMS.API/
-│       ├── Controllers/          # Auth, Chatbot, Data Controllers
-│       ├── Data/                 # ApplicationDbContext & Seed Data
+│       ├── Controllers/          # Auth, Chatbot & Data Controllers
+│       ├── Data/                 # EF Core DbContext & Seed Data
 │       ├── DTOs/                 # Request & Response Data Transfer Objects
 │       ├── Models/               # Domain Models & Entities
-│       ├── Services/             # AuthService (JWT/BCrypt), GeminiChatbotService
+│       ├── Services/             # AuthService & GeminiChatbotService
 │       ├── Properties/           # launchSettings.json
-│       ├── Program.cs            # App Builder, Middleware, Swagger Setup
-│       └── appsettings.json      # JWT & App Configuration
+│       ├── Program.cs            # Builder Services, Middleware & Swagger Setup
+│       └── appsettings.json      # JWT Secret & Connection Config
 │
 ├── frontend/
 │   ├── login.html                # Auth Screen (Login & Register)
 │   ├── dashboard.html            # Main Overview Dashboard
 │   ├── chatbot.html              # Dedicated Gemini AI Assistant Page
-│   ├── students.html             # Students Management
+│   ├── students.html             # Student Management
 │   ├── faculty.html              # Faculty Management
 │   ├── courses.html              # Course Management
 │   ├── attendance.html           # Attendance Tracking
-│   ├── exams.html                # Exam Timetables & Schedule
+│   ├── exams.html                # Exam Timetable & Schedule
 │   ├── marks-results.html        # Academic Marks & Results
 │   ├── fees.html                 # Tuition Fee Records
 │   ├── materials.html            # Study Materials Repository
@@ -232,13 +260,15 @@ CP-CMS/
 │       ├── api.js                # Centralized AJAX Client
 │       └── chatbot.js            # Floating Chatbot Widget UI
 │
-├── .gitignore                    # Excluded files list
-└── README.md                     # Project documentation
+├── .gitignore                    # Git Ignore Rules
+└── README.md                     # Documentation
 ```
 
 ---
 
 <div align="center">
-  <p>Maintained with ❤️ by <b>Kirtan Barot</b></p>
-  <p><a href="https://github.com/kirtan1911/CP-CMS">⭐ Star this repository if you find it helpful!</a></p>
+  <br>
+  <p>Crafted with ❤️ by <b>Kirtan Barot</b></p>
+  <p><a href="https://github.com/kirtan1911/CP-CMS">⭐ <b>Star CP-CMS on GitHub</b></a> if you love this project!</p>
+  <br>
 </div>
