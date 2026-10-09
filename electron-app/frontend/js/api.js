@@ -87,23 +87,6 @@ const API = {
     return await API.request('/auth/me', 'GET');
   },
 
-  // ── FORGOT PASSWORD & OTP API CALLS ──
-  sendOtp: async (email) => {
-    return await API.request('/auth/send-otp', 'POST', { email });
-  },
-
-  verifyOtp: async (email, otpCode) => {
-    return await API.request('/auth/verify-otp', 'POST', { email, otpCode });
-  },
-
-  resetPassword: async (email, otpCode, newPassword, confirmPassword) => {
-    return await API.request('/auth/reset-password', 'POST', { email, otpCode, newPassword, confirmPassword });
-  },
-
-  resendOtp: async (email) => {
-    return await API.request('/auth/resend-otp', 'POST', { email });
-  },
-
   // ── ENTITY API CALLS (AJAX) ──
   getUsers: async () => await API.request('/users'),
   createUser: async (userObj) => await API.request('/users', 'POST', userObj),

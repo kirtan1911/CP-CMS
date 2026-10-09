@@ -17,6 +17,7 @@ namespace NorthfieldCMS.API.Services
     {
         private readonly ApplicationDbContext _db;
         private readonly IConfiguration _config;
+        private static readonly Random _random = new Random();
 
         public AuthService(ApplicationDbContext db, IConfiguration config)
         {
@@ -39,7 +40,6 @@ namespace NorthfieldCMS.API.Services
             }
             catch
             {
-                // Fallback check if plain text in legacy fallback scenario
                 isPasswordValid = (user.PasswordHash == dto.Password);
             }
 
@@ -77,6 +77,107 @@ namespace NorthfieldCMS.API.Services
             await _db.SaveChangesAsync();
 
             return GenerateAuthResponse(user, "Account registered successfully.");
+        }
+
+        public async Task<OtpResponseDto> SendOtpAsync(ForgotPasswordDto dto)
+        {
+            string cleanEmail = dto.Email.ToLower().Trim();
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == cleanEmail);
+            if (user == null)
+            {
+                return new OtpResponseDto { Success = false, Message = "No registered account found with this email." };
+            }
+
+            string otpCode = _random.Next(100000, 999999).ToString();
+            DateTime expiresAt = DateTime.UtcNow.AddMinutes(5);
+
+            var existingOtps = await _db.PasswordResetOtps.Where(o => o.Email == cleanEmail && !o.IsUsed).ToListAsync();
+            foreach (var old in existingOtps)
+            {
+                old.IsUsed = true;
+            }
+
+            var otpRecord = new PasswordResetOtp
+            {
+                Email = cleanEmail,
+                OtpCode = otpCode,
+                ExpiresAt = expiresAt,
+                IsUsed = false,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _db.PasswordResetOtps.Add(otpRecord);
+            await _db.SaveChangesAsync();
+
+            Console.WriteLine($"[OTP ENGINE]: Generated OTP {otpCode} for {cleanEmail}, valid until {expiresAt}");
+
+            return new OtpResponseDto
+            {
+                Success = true,
+                Message = $"OTP code sent successfully to {cleanEmail}. (Check inbox)",
+                DevOtpCode = otpCode
+            };
+        }
+
+        public async Task<OtpResponseDto> VerifyOtpAsync(VerifyOtpDto dto)
+        {
+            string cleanEmail = dto.Email.ToLower().Trim();
+            string cleanOtp = dto.OtpCode.Trim();
+
+            var otpRecord = await _db.PasswordResetOtps
+                .FirstOrDefaultAsync(o => o.Email == cleanEmail && o.OtpCode == cleanOtp && !o.IsUsed && o.ExpiresAt > DateTime.UtcNow);
+
+            if (otpRecord == null)
+            {
+                return new OtpResponseDto { Success = false, Message = "Invalid or expired OTP code. Please request a new one." };
+            }
+
+            return new OtpResponseDto
+            {
+                Success = true,
+                Message = "OTP verified successfully. You may now set a new password."
+            };
+        }
+
+        public async Task<OtpResponseDto> ResetPasswordAsync(ResetPasswordDto dto)
+        {
+            if (dto.NewPassword != dto.ConfirmPassword)
+            {
+                return new OtpResponseDto { Success = false, Message = "Passwords do not match." };
+            }
+
+            string cleanEmail = dto.Email.ToLower().Trim();
+            string cleanOtp = dto.OtpCode.Trim();
+
+            var otpRecord = await _db.PasswordResetOtps
+                .FirstOrDefaultAsync(o => o.Email == cleanEmail && o.OtpCode == cleanOtp && !o.IsUsed && o.ExpiresAt > DateTime.UtcNow);
+
+            if (otpRecord == null)
+            {
+                return new OtpResponseDto { Success = false, Message = "Invalid or expired OTP verification session." };
+            }
+
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == cleanEmail);
+            if (user == null)
+            {
+                return new OtpResponseDto { Success = false, Message = "User account not found." };
+            }
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+            otpRecord.IsUsed = true;
+
+            await _db.SaveChangesAsync();
+
+            return new OtpResponseDto
+            {
+                Success = true,
+                Message = "Password reset successfully! Please login with your new password."
+            };
+        }
+
+        public async Task<OtpResponseDto> ResendOtpAsync(ResendOtpDto dto)
+        {
+            return await SendOtpAsync(new ForgotPasswordDto { Email = dto.Email });
         }
 
         private AuthResponseDto GenerateAuthResponse(User user, string message)

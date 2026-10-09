@@ -1,0 +1,60 @@
+{
+  "name": "northfield-cms",
+  "version": "1.0.0",
+  "description": "Northfield College Management System - Desktop Application for Microsoft Windows",
+  "main": "electron-app/main.js",
+  "author": "Kirtan Barot",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "publish-backend": "dotnet publish backend/NorthfieldCMS.API/NorthfieldCMS.API.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./electron-app/bin/backend",
+    "copy-frontend": "powershell -Command \"Copy-Item -Path 'frontend' -Destination 'electron-app\\frontend' -Recurse -Force\"",
+    "dist": "npm run publish-backend && npm run copy-frontend && electron-builder --win nsis portable dir"
+  },
+  "build": {
+    "appId": "com.northfield.cms",
+    "productName": "Northfield CMS",
+    "copyright": "Copyright © 2026 Kirtan Barot",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron-app/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "electron-app/bin/backend",
+        "to": "bin/backend",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "electron-app/frontend",
+        "to": "frontend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable",
+        "dir"
+      ],
+      "icon": "electron-app/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Northfield CMS"
+    }
+  },
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8"
+  }
+}

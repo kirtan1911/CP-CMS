@@ -10,21 +10,21 @@
   <!-- TECH STACK BADGES MATRIX -->
   <p align="center">
     <a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/.NET-10.0-7c3aed?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10"></a>
+    <a href="https://electronjs.org/"><img src="https://img.shields.io/badge/Electron-Desktop_App-47848F?style=for-the-badge&logo=electron&logoColor=white" alt="Electron"></a>
     <a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/ASP.NET_Core-Web_API-22d3ee?style=for-the-badge&logo=dotnet&logoColor=black" alt="ASP.NET Core"></a>
     <a href="https://learn.microsoft.com/ef/core/"><img src="https://img.shields.io/badge/EF_Core-SQLite_DB-22c55e?style=for-the-badge&logo=sqlite&logoColor=white" alt="EF Core"></a>
     <a href="https://ai.google.dev/"><img src="https://img.shields.io/badge/Google_Gemini-AI_2.5-f59e0b?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini AI"></a>
-    <a href="https://swagger.io/"><img src="https://img.shields.io/badge/Swagger-OpenAPI_v1-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger"></a>
     <a href="https://github.com/kirtan1911/CP-CMS"><img src="https://img.shields.io/badge/License-MIT-ef4444?style=for-the-badge" alt="MIT License"></a>
   </p>
 
   <!-- QUICK NAVIGATION PILLS -->
   <p align="center">
     <a href="#-overview"><b>✨ Overview</b></a> •
+    <a href="#-dashboard-preview--code-showcase"><b>🖥️ Dashboard Showcase</b></a> •
+    <a href="#-desktop-app--exe-installer"><b>📦 Desktop App (.exe)</b></a> •
     <a href="#-key-features"><b>🚀 Features</b></a> •
     <a href="#-demo-credentials"><b>🔑 Demo Credentials</b></a> •
-    <a href="#-architecture--end-to-end-request-lifecycle"><b>🏛 Architecture</b></a> •
     <a href="#-swagger-api-matrix"><b>📖 Swagger API</b></a> •
-    <a href="#-gemini-ai-assistant"><b>🤖 AI Assistant</b></a> •
     <a href="#-quick-start-guide"><b>⚡ Quick Start</b></a>
   </p>
 
@@ -35,7 +35,155 @@
 <a id="-overview"></a>
 ## ✨ Overview
 
-> **Northfield College Management System (CP-CMS)** is a premium, full-stack Academic ERP platform designed for modern universities and colleges. Built with a high-performance **ASP.NET Core (.NET 10) RESTful Web API** backend, **Entity Framework Core with SQLite**, **JWT Bearer Authentication**, and an **Apple-inspired Liquid Glassmorphism UI**, CP-CMS includes a **Google Gemini-powered AI Chatbot** for instant academic Q&A.
+> **Northfield College Management System (CP-CMS)** is a premium, full-stack Academic ERP platform designed for modern universities and colleges. Built with a high-performance **ASP.NET Core (.NET 10) RESTful Web API** backend, **Electron Desktop Application for Windows (.exe)**, **Entity Framework Core with SQLite**, **OTP Email Authentication**, and an **Apple-inspired Liquid Glassmorphism UI**, CP-CMS includes a **Google Gemini-powered AI Chatbot** for instant academic Q&A.
+
+<br>
+
+<a id="-dashboard-preview--code-showcase"></a>
+## 🖥️ Dashboard Preview & Code Showcase
+
+### 🎨 Visual Interface Preview
+![Northfield CMS Dashboard Preview](dashboard-preview.png)
+
+<br>
+
+### 💻 Dashboard Page Implementation Code (`frontend/dashboard.html`)
+Below is an excerpt of the core **Dashboard Page Component** demonstrating how stats KPI widgets, Chart.js analytics, timetables, and dynamic Web API data bindings are structured:
+
+```javascript
+/* ============================================================
+   NORTHFIELD CMS — ACADEMIC DASHBOARD COMPONENT
+   Renders statistical KPI cards, enrollment & fee charts, 
+   upcoming exam schedules, and user profile summaries.
+============================================================ */
+function renderDashboard() {
+  const user = API.getUser() || { name: 'Prof. Rajesh Kumar', role: 'Admin' };
+  
+  return `
+    <!-- Top Greeting Banner -->
+    <div class="page-header d-flex justify-content-between align-items-center">
+      <div>
+        <h1 class="page-header-title">Welcome back, ${user.name} 👋</h1>
+        <p class="page-header-sub">Here is your academic overview for today.</p>
+      </div>
+      <button class="btn btn-primary-custom" onclick="openModal('Create Notification')">
+        <i class="bi bi-plus-lg"></i> Post Announcement
+      </button>
+    </div>
+
+    <!-- 📊 KPI Stat Cards Grid -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <span class="stat-label">Total Students</span>
+              <div class="stat-value">1,388</div>
+              <div class="stat-meta stat-up"><i class="bi bi-arrow-up-short"></i> +4.2% this term</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-people"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <span class="stat-label">Faculty Members</span>
+              <div class="stat-value">54</div>
+              <div class="stat-meta stat-neutral">Active & Verified</div>
+            </div>
+            <div class="stat-icon" style="background:var(--c-dim);color:var(--cyan)"><i class="bi bi-person-badge"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <span class="stat-label">Avg. Attendance</span>
+              <div class="stat-value">88.4%</div>
+              <div class="stat-meta stat-up"><i class="bi bi-arrow-up-short"></i> +1.8% above threshold</div>
+            </div>
+            <div class="stat-icon" style="background:var(--s-dim);color:var(--success)"><i class="bi bi-calendar-check"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <span class="stat-label">Fee Collection</span>
+              <div class="stat-value">₹48.2L</div>
+              <div class="stat-meta stat-warn">80.5% Collected</div>
+            </div>
+            <div class="stat-icon" style="background:var(--w-dim);color:var(--warning)"><i class="bi bi-wallet2"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📈 Charts & Upcoming Exams Row -->
+    <div class="row g-3">
+      <div class="col-lg-8">
+        <div class="card-dark p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h3 class="section-title">Department Enrollment Breakdown</h3>
+              <p class="section-subtitle">Student distribution across departments</p>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="enrollChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card-dark p-4">
+          <h3 class="section-title mb-3">Upcoming Examinations</h3>
+          <div class="d-flex flex-column gap-3">
+            <div class="d-flex align-items-center gap-3 p-2 border-bottom border-secondary">
+              <div class="exam-date-pill"><span>AUG</span><strong>20</strong></div>
+              <div>
+                <div class="fw-bold">Database Management</div>
+                <small class="text-muted">CS301 • 10:00 AM • Hall 3B</small>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-3 p-2 border-bottom border-secondary">
+              <div class="exam-date-pill"><span>AUG</span><strong>22</strong></div>
+              <div>
+                <div class="fw-bold">Operating Systems</div>
+                <small class="text-muted">CS302 • 02:00 PM • Lab 2</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+```
+
+<br>
+
+<a id="-desktop-app--exe-installer"></a>
+## 📦 Electron Desktop Application (.exe)
+
+Northfield CMS is available as a **standalone Microsoft Windows Desktop Application** built with Electron and self-contained ASP.NET Core API.
+
+* 📦 **Installer Setup (.exe):** [`dist/Northfield CMS Setup 1.0.0.exe`](dist/Northfield%20CMS%20Setup%201.0.0.exe)
+* ⚡ **Portable Executable (.exe):** [`dist/Northfield CMS 1.0.0.exe`](dist/Northfield%20CMS%201.0.0.exe)
+* 📁 **Unpacked Executable:** [`dist/win-unpacked/Northfield CMS.exe`](dist/win-unpacked/Northfield%20CMS.exe)
+
+### Launch Desktop App via Terminal
+```bash
+npm start
+```
+
+### Build Windows `.exe` Package
+```bash
+npm run dist
+```
 
 <br>
 
@@ -46,9 +194,10 @@
   <tr>
     <td width="50%" valign="top">
       <div align="left">
-        <h3>🔐 Authentication & Role Security</h3>
+        <h3>🔐 Authentication & OTP Verification</h3>
         <ul>
           <li><b>BCrypt Hashing:</b> Passwords hashed using salted BCrypt encryption.</li>
+          <li><b>Email OTP Password Reset:</b> 6-digit OTP code generation with 5-minute expiry.</li>
           <li><b>JWT Bearer Tokens:</b> Signed JWT tokens with role claims & 24h expiration.</li>
           <li><b>3-Role Access Control:</b> Tailored views for <b>Admin</b>, <b>Faculty</b>, and <b>Students</b>.</li>
         </ul>
@@ -104,73 +253,6 @@ Test the system instantly using any of the pre-configured accounts below:
 
 <br>
 
-<a id="-architecture--end-to-end-request-lifecycle"></a>
-## 🏛 Architecture & End-to-End Request Lifecycle
-
-### 1️⃣ High-Level System Architecture
-
-```mermaid
-flowchart LR
-    classDef client fill:#1e1b4b,stroke:#7c3aed,stroke-width:2px,color:#fff;
-    classDef api fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#fff;
-    classDef auth fill:#14532d,stroke:#22c55e,stroke-width:2px,color:#fff;
-    classDef db fill:#451a03,stroke:#f59e0b,stroke-width:2px,color:#fff;
-    classDef ai fill:#701a75,stroke:#e879f9,stroke-width:2px,color:#fff;
-
-    Client["🎨 Web Frontend<br>(HTML5 / CSS3 / JS / AJAX)"]:::client
-    API["⚡ ASP.NET Core 10 Web API<br>(NorthfieldCMS.API)"]:::api
-    Auth["🔐 AuthService<br>(BCrypt + JWT Bearer)"]:::auth
-    EF["🗄️ EF Core DbContext<br>(SQLite Engine)"]:::db
-    Gemini["🤖 GeminiChatbotService<br>(Google Gemini API)"]:::ai
-
-    Client -->|AJAX JSON Request| API
-    API -->|Authenticate Claims| Auth
-    API -->|Query / Mutate| EF
-    API -->|Send Prompt| Gemini
-```
-
-<br>
-
-### 2️⃣ Step-by-Step Request & Response Sequence Flow
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor User as 👤 Client (Browser)
-    participant UI as 🎨 AJAX Client (api.js)
-    participant API as ⚡ Web API (.NET 10)
-    participant JWT as 🔐 Auth & Claims
-    participant EF as 🗄️ EF Core (SQLite)
-    participant AI as 🤖 Gemini AI Service
-
-    Note over User, AI: 🔄 PHASE 1: Authentication & Token Generation (POST Request)
-    User->>UI: Submit Login Form (Email & Password)
-    UI->>API: 📩 POST /api/auth/login { email, password }
-    API->>JWT: Validate Credentials & Verify BCrypt Hash
-    JWT-->>API: Issue Signed JWT Token (24h Expiry)
-    API-->>UI: 📤 200 OK Response { token: "eyJhbG...", role: "Student" }
-    UI->>UI: Store Token in LocalStorage
-
-    Note over User, AI: 🔄 PHASE 2: Data Fetching with Bearer Token (GET Request)
-    User->>UI: Navigate to Courses / Exam Schedule
-    UI->>API: 📩 GET /api/courses (Header: Authorization: Bearer <Token>)
-    API->>JWT: Validate JWT Signature & Roles
-    API->>EF: Query Courses DbSet from SQLite
-    EF-->>API: Return IEnumerable<Course>
-    API-->>UI: 📤 200 OK Response [ { code: "CS501", name: "DBMS" } ]
-    UI->>User: Render Glassmorphism Data Cards
-
-    Note over User, AI: 🔄 PHASE 3: AI Chatbot Query Stream (POST Request)
-    User->>UI: Ask: "When do Mid-Semester exams start?"
-    UI->>API: 📩 POST /api/chatbot/chat { message, context }
-    API->>AI: Send Prompt to Gemini 2.5 API
-    AI-->>API: Return AI Reply Text
-    API-->>UI: 📤 200 OK Response { reply: "Mid-Semester exams begin Aug 20, 2026..." }
-    UI->>User: Stream Live Chat Bubble
-```
-
-<br>
-
 <a id="-swagger-api-matrix"></a>
 ## 📖 Swagger API Matrix
 
@@ -180,28 +262,18 @@ Explore and test all RESTful Web API endpoints interactively at `http://localhos
 | :---: | :--- | :---: | :--- |
 | <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/auth/login` | Public | Authenticates user & issues signed JWT Token |
 | <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/auth/register` | Public | Registers new system user account |
+| <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/auth/send-otp` | Public | Sends 6-digit OTP code for password reset |
+| <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/auth/verify-otp` | Public | Verifies OTP code validity |
+| <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/auth/reset-password` | Public | Resets user password with valid OTP |
 | <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/auth/me` | <img src="https://img.shields.io/badge/Bearer_JWT-22d3ee?style=flat" alt="JWT"> | Returns current authenticated user claims |
 | <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/users` | Public | Retrieves system users list |
-| <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/users` | <img src="https://img.shields.io/badge/Admin-7c3aed?style=flat" alt="Admin"> | Creates new system user |
 | <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/students` | Public | Retrieves enrolled students list |
 | <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/faculty` | Public | Retrieves faculty members list |
 | <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/courses` | Public | Retrieves academic courses catalog |
 | <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/departments` | Public | Retrieves college departments |
 | <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/exams` | Public | Retrieves examination timetables |
 | <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/fees` | Public | Retrieves student fee payment status |
-| <img src="https://img.shields.io/badge/GET-22c55e?style=for-the-badge" alt="GET"> | `/api/materials` | Public | Retrieves uploaded course study materials |
 | <img src="https://img.shields.io/badge/POST-7c3aed?style=for-the-badge" alt="POST"> | `/api/chatbot/chat` | Public | Submits prompt to Gemini AI Chatbot |
-
-<br>
-
-<a id="-gemini-ai-assistant"></a>
-## 🤖 Dedicated Gemini AI Assistant Page
-
-Access the dedicated AI Chatbot interface at `frontend/chatbot.html`:
-
-- **Quick Action Prompt Chips:** Instant answers for Exam Timetables, Attendance Percentage, Fee Payments, and Faculty Info.
-- **Typing Indicators:** Visual animated loading state during response generation.
-- **Smart Fallback Engine:** Offline context processing ensuring uninterrupted uptime even without active network keys.
 
 <br>
 
@@ -214,54 +286,16 @@ git clone https://github.com/kirtan1911/CP-CMS.git
 cd CP-CMS
 ```
 
-### 2️⃣ Run ASP.NET Core Web API
+### 2️⃣ Run Electron Desktop App
+```bash
+npm install
+npm start
+```
+
+### 3️⃣ Run Web API Standalone
 ```bash
 cd backend/NorthfieldCMS.API
 dotnet run --urls "http://localhost:5116"
-```
-
-### 3️⃣ Launch Web App & Swagger
-- **Swagger Documentation:** Open `http://localhost:5116/swagger`
-- **Web Frontend:** Open `frontend/login.html` or `frontend/dashboard.html`
-- **Dedicated AI Chatbot:** Open `frontend/chatbot.html`
-
-<br>
-
-<a id="-project-structure"></a>
-## 📁 Project Folder Structure
-
-```
-CP-CMS/
-├── backend/
-│   └── NorthfieldCMS.API/
-│       ├── Controllers/          # Auth, Chatbot & Data Controllers
-│       ├── Data/                 # EF Core DbContext & Seed Data
-│       ├── DTOs/                 # Request & Response Data Transfer Objects
-│       ├── Models/               # Domain Models & Entities
-│       ├── Services/             # AuthService & GeminiChatbotService
-│       ├── Properties/           # launchSettings.json
-│       ├── Program.cs            # Builder Services, Middleware & Swagger Setup
-│       └── appsettings.json      # JWT Secret & Connection Config
-│
-├── frontend/
-│   ├── login.html                # Auth Screen (Login & Register)
-│   ├── dashboard.html            # Main Overview Dashboard
-│   ├── chatbot.html              # Dedicated Gemini AI Assistant Page
-│   ├── students.html             # Student Management
-│   ├── faculty.html              # Faculty Management
-│   ├── courses.html              # Course Management
-│   ├── attendance.html           # Attendance Tracking
-│   ├── exams.html                # Exam Timetable & Schedule
-│   ├── marks-results.html        # Academic Marks & Results
-│   ├── fees.html                 # Tuition Fee Records
-│   ├── materials.html            # Study Materials Repository
-│   ├── notifications.html        # System Notices & Alerts
-│   └── js/
-│       ├── api.js                # Centralized AJAX Client
-│       └── chatbot.js            # Floating Chatbot Widget UI
-│
-├── .gitignore                    # Git Ignore Rules
-└── README.md                     # Documentation
 ```
 
 ---

@@ -22,6 +22,7 @@ namespace NorthfieldCMS.API.Data
         public DbSet<Material> Materials { get; set; } = null!;
         public DbSet<FeeRecord> FeeRecords { get; set; } = null!;
         public DbSet<NotificationRecord> NotificationRecords { get; set; } = null!;
+        public DbSet<PasswordResetOtp> PasswordResetOtps { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
