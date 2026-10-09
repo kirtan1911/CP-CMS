@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Northfield College Management System — AI Assistant Chatbot Page powered by Gemini AI.">
+  <title>Gemini AI Assistant — Northfield CMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #08080b;
+      --panel:     rgba(22,22,28,.55);
+      --card:      rgba(255,255,255,.035);
+      --card2:     rgba(255,255,255,.055);
+      --line:      rgba(255,255,255,.09);
+      --line2:     rgba(255,255,255,.16);
+      --text:      #f3f2ef;
+      --text2:     #a3a2ac;
+      --text3:     #726f7c;
+      --primary:   #8d7bff;
+      --primary-h: #7a67f2;
+      --p-dim:     rgba(141,123,255,.16);
+      --p-dim2:    rgba(141,123,255,.28);
+      --cyan:      #5ac8fa;
+      --c-dim:     rgba(90,200,250,.14);
+      --success:   #34c759;
+      --s-dim:     rgba(52,199,89,.14);
+      --warning:   #ff9f0a;
+      --w-dim:     rgba(255,159,10,.14);
+      --danger:    #ff453a;
+      --d-dim:     rgba(255,69,58,.15);
+      --radius:    16px;
+      --radius-sm: 12px;
+      --radius-lg: 24px;
+      --coral:     #e8836c;
+      --teal:      #3fc2b0;
+      --rim-hi:    rgba(255,255,255,.35);
+      --sidebar-w: 258px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { background: var(--bg); }
+    html::before, html::after {
+      content: ""; position: fixed; z-index: 0; pointer-events: none;
+      border-radius: 50%; filter: blur(110px); mix-blend-mode: screen;
+    }
+    html::before {
+      width: 46vw; height: 46vw; top: -16vw; left: -12vw;
+      background: radial-gradient(circle at 35% 35%, var(--primary), transparent 70%);
+      opacity: .45; animation: lg-drift-a 34s ease infinite;
+    }
+    html::after {
+      width: 40vw; height: 40vw; bottom: -16vw; right: -10vw;
+      background: radial-gradient(circle at 60% 60%, var(--coral), transparent 70%);
+      opacity: .3; animation: lg-drift-b 40s ease infinite;
+    }
+    @keyframes lg-drift-a { 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(3vw,4vw) scale(1.07); } }
+    @keyframes lg-drift-b { 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(-4vw,-3vw) scale(1.05); } }
+
+    body {
+      background: transparent !important;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative; z-index: 1;
+    }
+
+    /* APP SHELL */
+    .app-shell { display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w); min-width: var(--sidebar-w);
+      background: rgba(18,18,24,.5) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      backdrop-filter: blur(28px) saturate(180%);
+      border-right: 1px solid var(--line);
+      position: fixed; inset: 0 auto 0 0; z-index: 1040;
+      display: flex; flex-direction: column;
+      transition: transform .22s cubic-bezier(.4,0,.2,1);
+    }
+    .sidebar-header { padding: 18px 14px 16px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 50% !important;
+      background: conic-gradient(from 140deg, var(--primary), var(--coral), var(--teal), var(--primary)) !important;
+      display: grid; place-items: center; font-size: 16px; flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(141,123,255,.35);
+    }
+    .brand-name { font-size: 14px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+    .brand-sub { font-size: 10px; color: var(--cyan); text-transform: uppercase; letter-spacing: .09em; margin-top: 2px; }
+
+    .sidebar-nav { flex: 1; overflow-y: auto; padding: 8px 10px 12px; }
+    .nav-group-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); padding: 14px 8px 5px; display: block; }
+    .nav-group-label:first-child { padding-top: 6px; }
+
+    .nav-link {
+      display: flex; align-items: center; gap: 10px; padding: 9px 10px;
+      border-radius: var(--radius-sm); color: var(--text2); font-size: 13px; font-weight: 500;
+      text-decoration: none; cursor: pointer; margin-bottom: 1px; transition: all .12s;
+    }
+    .nav-link:hover { background: rgba(255,255,255,.06) !important; color: var(--text); }
+    .nav-link.active { background: var(--p-dim) !important; color: #fff; font-weight: 600; }
+    .nav-link.active i { color: var(--cyan); }
+    .nav-link i { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; }
+
+    .sidebar-footer { padding: 12px 14px; border-top: 1px solid var(--line); flex-shrink: 0; }
+    .s-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2d1b69; color: #c4b5fd; display: grid; place-items: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .s-user-name { font-size: 12.5px; font-weight: 600; line-height: 1.2; }
+    .s-user-role { font-size: 10.5px; color: var(--text3); margin-top: 1px; }
+
+    /* MAIN WRAP */
+    .main-wrap {
+      margin-left: var(--sidebar-w); width: calc(100% - var(--sidebar-w));
+      display: flex; flex-direction: column; min-height: 100vh; min-width: 0;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      height: 62px; background: rgba(14,14,18,.45) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(170%);
+      backdrop-filter: blur(24px) saturate(170%);
+      border-bottom: 1px solid var(--line) !important;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; position: sticky; top: 0; z-index: 1000; flex-shrink: 0; gap: 12px;
+    }
+    .page-title-text { font-size: 15px; font-weight: 700; }
+    .page-breadcrumb { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+    /* CHATBOT CONTAINER */
+    .chat-page-area {
+      flex: 1; padding: 20px 24px 30px; display: flex; flex-direction: column;
+      max-width: 1200px; width: 100%; margin: 0 auto; min-height: calc(100vh - 62px);
+    }
+    
+    .chat-card {
+      flex: 1; background: rgba(20,20,26,.55);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius-lg);
+      -webkit-backdrop-filter: blur(28px); backdrop-filter: blur(28px);
+      box-shadow: inset 0 1px 0 var(--rim-hi), 0 30px 60px -20px rgba(0,0,0,.6);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    .chat-card-header {
+      padding: 16px 22px; border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,.02);
+    }
+    .chat-header-info { display: flex; align-items: center; gap: 12px; }
+    .chat-bot-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      display: grid; place-items: center; color: #fff; font-size: 20px;
+      box-shadow: 0 4px 16px rgba(141,123,255,.4);
+    }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; color: var(--success); background: var(--s-dim);
+      padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(52,199,89,.2);
+    }
+    .status-pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
+
+    /* CHAT STREAM */
+    .chat-stream {
+      flex: 1; padding: 22px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 16px;
+      scrollbar-width: thin; scrollbar-color: var(--line2) transparent;
+      min-height: 380px; max-height: calc(100vh - 280px);
+    }
+
+    .chat-msg { display: flex; gap: 12px; max-width: 85%; align-items: flex-start; }
+    .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .chat-msg.bot { align-self: flex-start; }
+
+    .msg-avatar {
+      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+      display: grid; place-items: center; font-size: 14px; font-weight: 700;
+    }
+    .chat-msg.user .msg-avatar { background: #2d1b69; color: #c4b5fd; }
+    .chat-msg.bot .msg-avatar { background: linear-gradient(135deg, var(--primary), var(--coral)); color: #fff; }
+
+    .msg-bubble {
+      padding: 12px 16px; border-radius: 16px; font-size: 13.5px; line-height: 1.6;
+      box-shadow: 0 4px 14px rgba(0,0,0,.25); position: relative;
+    }
+    .chat-msg.user .msg-bubble {
+      background: linear-gradient(135deg, var(--primary), var(--primary-h));
+      color: #fff; border-bottom-right-radius: 4px;
+    }
+    .chat-msg.bot .msg-bubble {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      color: var(--text); border-bottom-left-radius: 4px;
+    }
+
+    .msg-time { font-size: 10px; color: var(--text3); margin-top: 4px; display: block; text-align: right; }
+    .chat-msg.bot .msg-time { text-align: left; }
+
+    /* SUGGESTION CHIPS */
+    .prompt-suggestions {
+      padding: 10px 22px; display: flex; gap: 8px; flex-wrap: wrap;
+      background: rgba(0,0,0,.15); border-top: 1px solid var(--line);
+    }
+    .chip-btn {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px; padding: 6px 14px; font-size: 12px; color: var(--text2);
+      cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .chip-btn:hover { background: var(--p-dim); border-color: var(--primary); color: #fff; }
+    .chip-btn i { color: var(--cyan); font-size: 13px; }
+
+    /* CHAT INPUT AREA */
+    .chat-card-footer {
+      padding: 16px 22px; border-top: 1px solid var(--line);
+      background: rgba(14,14,18,.5); display: flex; gap: 12px; align-items: center;
+    }
+    .chat-input {
+      flex: 1; background: rgba(255,255,255,.05) !important;
+      border: 1px solid rgba(255,255,255,.14) !important;
+      color: var(--text) !important; border-radius: var(--radius-sm) !important;
+      padding: 11px 16px; font-size: 13.5px; font-family: inherit;
+    }
+    .chat-input:focus { outline: none; border-color: var(--primary) !important; box-shadow: 0 0 0 3px var(--p-dim) !important; }
+    
+    .btn-send {
+      background: linear-gradient(135deg, var(--primary), var(--primary-h));
+      color: #fff; border: none; border-radius: var(--radius-sm);
+      padding: 0 20px; height: 44px; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; transition: all .15s;
+    }
+    .btn-send:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    /* TYPING INDICATOR */
+    .typing-dots { display: flex; gap: 4px; padding: 6px 0; }
+    .typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--text2); animation: typing 1.4s infinite ease-in-out; }
+    .typing-dots span:nth-child(1) { animation-delay: 0s; }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing { 0%,100%{ opacity: .3; transform: scale(0.8); } 50%{ opacity: 1; transform: scale(1.2); } }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-wrap { margin-left: 0; width: 100%; }
+      .chat-page-area { padding: 12px 14px 20px; }
+      .chat-card { border-radius: var(--radius); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="d-flex align-items-center gap-2">
+          <div class="brand-mark"><i class="bi bi-mortarboard-fill text-white"></i></div>
+          <div>
+            <div class="brand-name">Northfield CMS</div>
+            <div class="brand-sub">Academic Portal</div>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <span class="nav-group-label">Overview</span>
+        <a class="nav-link" href="dashboard.html"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+        <a class="nav-link active" href="chatbot.html"><i class="bi bi-robot"></i> AI Assistant</a>
+
+        <span class="nav-group-label">Academics</span>
+        <a class="nav-link" href="students.html"><i class="bi bi-people-fill"></i> Students</a>
+        <a class="nav-link" href="faculty.html"><i class="bi bi-person-badge-fill"></i> Faculty</a>
+        <a class="nav-link" href="courses.html"><i class="bi bi-book-fill"></i> Courses</a>
+        <a class="nav-link" href="departments.html"><i class="bi bi-building"></i> Departments</a>
+
+        <span class="nav-group-label">Operations</span>
+        <a class="nav-link" href="attendance.html"><i class="bi bi-calendar-check-fill"></i> Attendance</a>
+        <a class="nav-link" href="exams.html"><i class="bi bi-file-earmark-text-fill"></i> Exams</a>
+        <a class="nav-link" href="marks-results.html"><i class="bi bi-trophy-fill"></i> Marks & Results</a>
+        <a class="nav-link" href="fees.html"><i class="bi bi-credit-card-fill"></i> Fees</a>
+        <a class="nav-link" href="materials.html"><i class="bi bi-folder-fill"></i> Study Materials</a>
+
+        <span class="nav-group-label">System</span>
+        <a class="nav-link" href="notifications.html"><i class="bi bi-bell-fill"></i> Notifications</a>
+        <a class="nav-link" href="reports.html"><i class="bi bi-bar-chart-line-fill"></i> Reports</a>
+        <a class="nav-link" href="settings.html"><i class="bi bi-gear-fill"></i> Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <div class="s-avatar" id="s-avatar">U</div>
+            <div>
+              <div class="s-user-name" id="s-user-name">User</div>
+              <div class="s-user-role" id="s-user-role">Student</div>
+            </div>
+          </div>
+          <a href="login.html" class="logout-btn" title="Logout"><i class="bi bi-box-arrow-right"></i></a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrap">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn icon-btn d-md-none" id="mobile-toggle"><i class="bi bi-list"></i></button>
+          <div>
+            <div class="page-title-text"><i class="bi bi-robot text-cyan me-1"></i> Gemini AI Assistant</div>
+            <div class="page-breadcrumb">Northfield CMS / AI Chatbot</div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <span class="status-badge"><span class="status-pulse"></span> Gemini 2.5 Active</span>
+          <button class="btn btn-secondary-custom btn-sm" id="clear-chat-btn"><i class="bi bi-trash3"></i> Clear Chat</button>
+        </div>
+      </header>
+
+      <!-- CHAT PAGE CONTENT -->
+      <main class="chat-page-area">
+        <div class="chat-card">
+          <!-- HEADER -->
+          <div class="chat-card-header">
+            <div class="chat-header-info">
+              <div class="chat-bot-avatar"><i class="bi bi-cpu-fill"></i></div>
+              <div>
+                <h2 style="font-size:15px; font-weight:700; margin:0;">Northfield AI Academic Assistant</h2>
+                <div style="font-size:11.5px; color:var(--text2);">Ask anything about courses, exams, attendance, fee dues, or faculty contacts.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STREAM -->
+          <div class="chat-stream" id="chat-stream">
+            <div class="chat-msg bot">
+              <div class="msg-avatar"><i class="bi bi-robot"></i></div>
+              <div>
+                <div class="msg-bubble">
+                  Hello! 👋 I am your Northfield CMS AI Assistant powered by Google Gemini. How can I assist you with your academics, exam schedule, attendance status, or fee details today?
+                </div>
+                <span class="msg-time">Just now</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUGGESTION CHIPS -->
+          <div class="prompt-suggestions">
+            <button class="chip-btn" data-prompt="When do the Mid-Semester exams start?"><i class="bi bi-calendar-event"></i> Exam Schedule</button>
+            <button class="chip-btn" data-prompt="What is my attendance percentage for DBMS?"><i class="bi bi-pie-chart-fill"></i> Attendance Check</button>
+            <button class="chip-btn" data-prompt="How can I pay my tuition fee dues?"><i class="bi bi-cash-coin"></i> Fee Payment</button>
+            <button class="chip-btn" data-prompt="Who teaches Computer Networks course?"><i class="bi bi-person-lines-fill"></i> Faculty Info</button>
+          </div>
+
+          <!-- INPUT -->
+          <div class="chat-card-footer">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Type your query here... (e.g. 'Show me my exam timetable')" autocomplete="off">
+            <button class="btn-send" id="btn-send"><i class="bi bi-send-fill"></i> Send</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = API.getCurrentUser();
+      if (user) {
+        document.getElementById('s-user-name').textContent = user.name || 'User';
+        document.getElementById('s-user-role').textContent = (user.role || 'Student').toUpperCase();
+        document.getElementById('s-avatar').textContent = user.initials || 'U';
+      }
+
+      const stream = document.getElementById('chat-stream');
+      const input = document.getElementById('chat-input');
+      const sendBtn = document.getElementById('btn-send');
+      const clearBtn = document.getElementById('clear-chat-btn');
+      const chips = document.querySelectorAll('.chip-btn');
+
+      function appendMessage(sender, text) {
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const isUser = sender === 'user';
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-msg ${sender}`;
+        
+        const avatarHtml = isUser 
+          ? `<div class="msg-avatar">${user ? (user.initials || 'U') : 'U'}</div>` 
+          : `<div class="msg-avatar"><i class="bi bi-robot"></i></div>`;
+
+        msgDiv.innerHTML = `
+          ${avatarHtml}
+          <div>
+            <div class="msg-bubble">${escapeHtml(text)}</div>
+            <span class="msg-time">${timeStr}</span>
+          </div>
+        `;
+        stream.appendChild(msgDiv);
+        stream.scrollTop = stream.scrollHeight;
+      }
+
+      function appendTyping() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'chat-msg bot';
+        typingDiv.id = 'typing-indicator';
+        typingDiv.innerHTML = `
+          <div class="msg-avatar"><i class="bi bi-robot"></i></div>
+          <div>
+            <div class="msg-bubble">
+              <div class="typing-dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        `;
+        stream.appendChild(typingDiv);
+        stream.scrollTop = stream.scrollHeight;
+      }
+
+      function removeTyping() {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+      }
+
+      function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      }
+
+      async function handleSend(customText) {
+        const text = customText || input.value.trim();
+        if (!text) return;
+
+        appendMessage('user', text);
+        if (!customText) input.value = '';
+
+        appendTyping();
+
+        try {
+          const res = await API.post('/api/chatbot/chat', {
+            message: text,
+            context: user ? `${user.name} (${user.role}) - ${user.department}` : 'Student'
+          });
+
+          removeTyping();
+          if (res && res.reply) {
+            appendMessage('bot', res.reply);
+          } else {
+            appendMessage('bot', 'I am Northfield CMS AI Assistant. I can help you check exam schedules, attendance status, fee dues, or course materials.');
+          }
+        } catch (err) {
+          removeTyping();
+          appendMessage('bot', 'Notice: Running in offline contextual mode. I can answer questions about exams, attendance, fees, courses, and college departments!');
+        }
+      }
+
+      sendBtn.addEventListener('click', () => handleSend());
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleSend();
+      });
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const prompt = chip.getAttribute('data-prompt');
+          handleSend(prompt);
+        });
+      });
+
+      clearBtn.addEventListener('click', () => {
+        stream.innerHTML = `
+          <div class="chat-msg bot">
+            <div class="msg-avatar"><i class="bi bi-robot"></i></div>
+            <div>
+              <div class="msg-bubble">
+                Chat stream cleared. How can I assist you today?
+              </div>
+              <span class="msg-time">Just now</span>
+            </div>
+          </div>
+        `;
+      });
+    });
+  </script>
+</body>
+</html>

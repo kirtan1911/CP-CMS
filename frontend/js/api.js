@@ -4,7 +4,7 @@
    and dynamic data binding for Admin, Faculty, and Student panels.
 ============================================================ */
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'http://localhost:5116/api';
 
 const API = {
   // ── TOKEN & AUTH HELPERS ──
