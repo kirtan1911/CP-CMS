@@ -1,0 +1,33 @@
+# .gitignore for .NET and Node/Frontend
+
+# Build & Output Directories
+bin/
+obj/
+dist/
+build/
+node_modules/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Environment & Settings
+.env
+.env.local
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE / Editor specific
+.vs/
+.vscode/
+.idea/
+*.swp
+*.DS_Store
+
+# Logs
+*.log
