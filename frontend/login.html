@@ -992,32 +992,28 @@
 
         <!-- Login panel -->
         <div id="login-panel" class="auth-card">
-          <div class="auth-card-logo"><i class="bi bi-mortarboard-fill"></i></div>
-          <h2>Welcome back</h2>
-          <p class="auth-subtitle" id="login-role-hint">Sign in to access your portal</p>
-
-          <div class="role-selector">
-            <span class="role-selector-label">Sign in as</span>
-            <div class="role-pills">
-              <button id="role-admin"   class="role-pill rp-admin active" type="button" onclick="selectRole('admin')">Admin</button>
-              <button id="role-faculty" class="role-pill rp-faculty"     type="button" onclick="selectRole('faculty')">Faculty</button>
-              <button id="role-student" class="role-pill rp-student"     type="button" onclick="selectRole('student')">Student</button>
-            </div>
-          </div>
+          <div class="auth-card-logo"><i class="bi bi-shield-lock-fill"></i></div>
+          <h2>Welcome Back</h2>
+          <p class="auth-subtitle">Sign in to access your Northfield College portal</p>
 
           <div id="login-error" class="auth-error" role="alert"></div>
           <form id="login-form" onsubmit="handleLogin(event)">
             <div class="mb-3">
-              <label class="auth-label" for="login-email">Email address</label>
-              <input class="form-control" type="email" id="login-email"
-                value="admin@northfield.edu" placeholder="name@northfield.edu"
-                required autocomplete="email">
+              <label class="auth-label" for="login-email">Email Address</label>
+              <div class="input-icon-wrap">
+                <input class="form-control" type="email" id="login-email"
+                  placeholder="Enter your registered email (e.g. name@northfield.edu)"
+                  required autocomplete="email">
+              </div>
             </div>
-            <div class="mb-1">
-              <label class="auth-label" for="login-password">Password</label>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <label class="auth-label mb-0" for="login-password">Password</label>
+                <a class="auth-link" href="javascript:void(0)" onclick="showForgot()" style="font-size:12px">Forgot password?</a>
+              </div>
               <div class="input-icon-wrap">
                 <input class="form-control" type="password" id="login-password"
-                  value="admin123" placeholder="Enter your password"
+                  placeholder="Enter your password"
                   required autocomplete="current-password">
                 <button type="button" class="input-icon"
                   onclick="togglePassword('login-password',this)" aria-label="Toggle password">
@@ -1025,48 +1021,99 @@
                 </button>
               </div>
             </div>
-            <div class="auth-options">
-              <label><input type="checkbox" id="remember-me" class="form-check-input"> Remember me</label>
-              <a class="auth-link" href="javascript:void(0)"
-                onclick="showToast('Password reset link sent to your email.')">Forgot password?</a>
+            <div class="auth-options mb-3">
+              <label><input type="checkbox" id="remember-me" class="form-check-input"> Remember me on this device</label>
             </div>
             <button type="submit" class="btn btn-primary-custom btn-auth">
               <i class="bi bi-box-arrow-in-right"></i>Sign In
             </button>
           </form>
-          <div class="auth-switch">Don't have an account?
-            <a class="auth-link" href="javascript:void(0)" onclick="showRegister()">Create account</a>
+
+          <div class="auth-switch mt-4">
+            Don't have an account?
+            <a class="auth-link fw-bold" href="javascript:void(0)" onclick="showRegister()">Create Account</a>
           </div>
-          <div class="demo-box">
-            <span class="demo-box-title">Demo credentials</span>
-            <div class="demo-box-row">Admin: <code>admin@northfield.edu</code> / <code>admin123</code></div>
-            <div class="demo-box-row">Faculty: <code>meera.shah@northfield.edu</code> / <code>faculty123</code></div>
-            <div class="demo-box-row">Student: <code>riya.mehta@northfield.edu</code> / <code>student123</code></div>
+        </div>
+
+        <!-- Forgot Password OTP panel -->
+        <div id="forgot-panel" class="auth-card d-none">
+          <div class="auth-card-logo"><i class="bi bi-key-fill"></i></div>
+          <h2>Reset Password</h2>
+          <p class="auth-subtitle">Verification OTP will be sent to your registered email</p>
+          
+          <div id="forgot-error"   class="auth-error"   role="alert"></div>
+          <div id="forgot-success" class="auth-success" role="status"></div>
+
+          <!-- Step 1: Send OTP -->
+          <form id="otp-send-form" onsubmit="handleSendOtp(event)">
+            <div class="mb-3">
+              <label class="auth-label" for="forgot-email">Registered Email Address</label>
+              <input class="form-control" type="email" id="forgot-email" placeholder="name@northfield.edu" required autocomplete="email">
+            </div>
+            <button type="submit" id="btn-send-otp" class="btn btn-primary-custom btn-auth mb-3">
+              <i class="bi bi-send"></i>Send OTP Code
+            </button>
+          </form>
+
+          <!-- Step 2: Verify & Reset Password (hidden until OTP sent) -->
+          <form id="otp-reset-form" class="d-none" onsubmit="handleResetPassword(event)">
+            <div class="mb-3">
+              <label class="auth-label" for="otp-code">6-Digit OTP Code</label>
+              <input class="form-control text-center tracking-widest fw-bold" type="text" id="otp-code" placeholder="123456" required maxlength="6">
+            </div>
+            <div class="mb-3">
+              <label class="auth-label" for="new-password">New Password</label>
+              <div class="input-icon-wrap">
+                <input class="form-control" type="password" id="new-password" placeholder="Minimum 6 characters" required minlength="6" autocomplete="new-password">
+                <button type="button" class="input-icon" onclick="togglePassword('new-password',this)"><i class="bi bi-eye"></i></button>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="auth-label" for="confirm-new-password">Confirm New Password</label>
+              <div class="input-icon-wrap">
+                <input class="form-control" type="password" id="confirm-new-password" placeholder="Re-enter new password" required minlength="6" autocomplete="new-password">
+                <button type="button" class="input-icon" onclick="togglePassword('confirm-new-password',this)"><i class="bi bi-eye"></i></button>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success-custom btn-auth mb-2">
+              <i class="bi bi-check2-circle"></i>Reset Password
+            </button>
+            <div class="text-center mb-3">
+              <button type="button" class="btn btn-ghost btn-sm" onclick="handleResendOtp()">
+                <i class="bi bi-arrow-clockwise"></i>Resend OTP Code
+              </button>
+            </div>
+          </form>
+
+          <div class="auth-switch mt-2">
+            Remembered your password?
+            <a class="auth-link fw-bold" href="javascript:void(0)" onclick="showLogin()">Sign In</a>
           </div>
         </div>
 
         <!-- Register panel -->
         <div id="register-panel" class="auth-card d-none">
           <div class="auth-card-logo"><i class="bi bi-person-plus-fill"></i></div>
-          <h2>Create account</h2>
-          <p class="auth-subtitle">Register for the Northfield College portal</p>
+          <h2>Create Account</h2>
+          <p class="auth-subtitle">Register for the Northfield College ERP Portal</p>
           <div id="register-error"   class="auth-error"   role="alert"></div>
           <div id="register-success" class="auth-success" role="status"></div>
           <form id="register-form" onsubmit="handleRegister(event)">
             <div class="mb-3">
-              <label class="auth-label" for="reg-name">Full name</label>
+              <label class="auth-label" for="reg-name">Full Name</label>
               <input class="form-control" type="text" id="reg-name" placeholder="Enter your full name" required>
             </div>
             <div class="mb-3">
-              <label class="auth-label" for="reg-email">Email address</label>
+              <label class="auth-label" for="reg-email">Email Address</label>
               <input class="form-control" type="email" id="reg-email" placeholder="name@northfield.edu" required autocomplete="email">
             </div>
             <div class="row g-2 mb-3">
               <div class="col-sm-6">
-                <label class="auth-label" for="reg-role">Role</label>
+                <label class="auth-label" for="reg-role">Account Role</label>
                 <select class="form-select" id="reg-role" required>
                   <option value="student">Student</option>
                   <option value="faculty">Faculty</option>
+                  <option value="admin">Administrator</option>
                 </select>
               </div>
               <div class="col-sm-6">
@@ -1089,7 +1136,7 @@
               </div>
             </div>
             <div class="mb-3">
-              <label class="auth-label" for="reg-confirm">Confirm password</label>
+              <label class="auth-label" for="reg-confirm">Confirm Password</label>
               <div class="input-icon-wrap">
                 <input class="form-control" type="password" id="reg-confirm"
                   placeholder="Re-enter password" required minlength="6" autocomplete="new-password">
@@ -1100,8 +1147,9 @@
               <i class="bi bi-person-plus"></i>Create Account
             </button>
           </form>
-          <div class="auth-switch">Already have an account?
-            <a class="auth-link" href="javascript:void(0)" onclick="showLogin()">Sign in</a>
+          <div class="auth-switch mt-4">
+            Already have an account?
+            <a class="auth-link fw-bold" href="javascript:void(0)" onclick="showLogin()">Sign In</a>
           </div>
         </div>
 
@@ -2515,115 +2563,205 @@ function toggleSidebar(){
 </script>
   <script>
     /* ============================================================
-       LOGIN-PAGE-ONLY LOGIC
-       (role selector, form handlers, register flow — everything
-       else shared/session-related lives in common.js)
+       PROFESSIONAL AUTHENTICATION HANDLERS
+       (Sign In, Create Account / Register, and OTP Forgot Password)
     ============================================================ */
-    let selectedRole = 'admin';
-    const roleCreds = {
-      admin:   ['admin@northfield.edu',       'admin123'],
-      faculty: ['meera.shah@northfield.edu',  'faculty123'],
-      student: ['riya.mehta@northfield.edu',  'student123']
-    };
-    const roleLabels = { admin:'Administrator', faculty:'Faculty Member', student:'Student' };
-
-    function selectRole(role) {
-      selectedRole = role;
-      document.querySelectorAll('.role-pill').forEach(p => p.classList.remove('active'));
-      document.getElementById('role-' + role).classList.add('active');
-      document.getElementById('login-email').value    = roleCreds[role][0];
-      document.getElementById('login-password').value = roleCreds[role][1];
-      document.getElementById('login-role-hint').textContent =
-        `Signing in as ${roleLabels[role]}`;
+    function showLogin() {
+      document.getElementById('login-panel').classList.remove('d-none');
+      document.getElementById('register-panel').classList.add('d-none');
+      document.getElementById('forgot-panel').classList.add('d-none');
+      clearAuthMessages();
     }
 
-    function showLogin()    { document.getElementById('login-panel').classList.remove('d-none'); document.getElementById('register-panel').classList.add('d-none'); clearAuthMessages(); }
-    function showRegister() { document.getElementById('login-panel').classList.add('d-none'); document.getElementById('register-panel').classList.remove('d-none'); clearAuthMessages(); }
+    function showRegister() {
+      document.getElementById('login-panel').classList.add('d-none');
+      document.getElementById('register-panel').classList.remove('d-none');
+      document.getElementById('forgot-panel').classList.add('d-none');
+      clearAuthMessages();
+    }
+
+    function showForgot() {
+      document.getElementById('login-panel').classList.add('d-none');
+      document.getElementById('register-panel').classList.add('d-none');
+      document.getElementById('forgot-panel').classList.remove('d-none');
+      document.getElementById('otp-send-form').classList.remove('d-none');
+      document.getElementById('otp-reset-form').classList.add('d-none');
+      clearAuthMessages();
+    }
+
     function clearAuthMessages() {
-      ['login-error','register-error'].forEach(id => {
-        const el=document.getElementById(id); if(el){ el.textContent=''; el.classList.remove('show'); }
+      ['login-error','register-error','forgot-error'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = ''; el.classList.remove('show'); }
       });
-      const ok=document.getElementById('register-success');
-      if(ok){ ok.textContent=''; ok.classList.remove('show'); }
+      ['register-success','forgot-success'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = ''; el.classList.remove('show'); }
+      });
     }
-    function showAuthError(id, msg) { const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); }
+
+    function showAuthError(id, msg) {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = msg; el.classList.add('show'); }
+    }
+
+    function showAuthSuccess(id, msg) {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = msg; el.classList.add('show'); }
+    }
 
     function togglePassword(inputId, btn) {
-      const input=document.getElementById(inputId);
-      const show=input.type==='password';
+      const input = document.getElementById(inputId);
+      const show = input.type === 'password';
       input.type = show ? 'text' : 'password';
       btn.querySelector('i').className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
     }
 
     async function handleLogin(e) {
-      e.preventDefault(); clearAuthMessages();
-      const email=document.getElementById('login-email').value.trim();
-      const pw=document.getElementById('login-password').value;
+      e.preventDefault();
+      clearAuthMessages();
+      const email = document.getElementById('login-email').value.trim();
+      const pw = document.getElementById('login-password').value;
 
-      // AJAX call to ASP.NET Core Web API JWT endpoint
+      if (!email || !pw) {
+        showAuthError('login-error', 'Please enter your email and password.');
+        return;
+      }
+
+      // AJAX call to Web API Login
       const apiRes = await API.login(email, pw);
       if (apiRes.ok && apiRes.data && apiRes.data.token) {
-        showToast('Signed in via ASP.NET Web API (JWT)!');
+        showToast('Signed in successfully!');
         const user = {
           email: apiRes.data.email,
           password: pw,
-          module: apiRes.data.role.toLowerCase(),
+          module: (apiRes.data.role || 'student').toLowerCase(),
           name: apiRes.data.name,
           role: apiRes.data.role,
           initials: apiRes.data.initials,
           department: apiRes.data.department
         };
-        setSession(user); applyUserToModule(user);
-        setTimeout(() => window.location.href = PAGE_FILE['dashboard'], 600);
+        setSession(user);
+        applyUserToModule(user);
+        
+        if (document.getElementById('remember-me').checked) {
+          try { localStorage.setItem('cms_remember', email); } catch {}
+        }
+        
+        setTimeout(() => window.location.href = PAGE_FILE['dashboard'], 400);
         return;
       }
 
-      // Fallback check
-      const account=findAccount(email, pw);
-      if (!account) { showAuthError('login-error', apiRes.data?.message || 'Invalid email or password. Use the demo credentials below.'); return; }
-      try {
-        if (document.getElementById('remember-me').checked) localStorage.setItem('cms_remember', email);
-        else localStorage.removeItem('cms_remember');
-      } catch {}
-      setSession(account); applyUserToModule(account);
-      window.location.href = PAGE_FILE['dashboard'];
+      showAuthError('login-error', apiRes.data?.message || 'Invalid email address or password. Please try again.');
     }
 
     async function handleRegister(e) {
-      e.preventDefault(); clearAuthMessages();
-      const name=document.getElementById('reg-name').value.trim();
-      const email=document.getElementById('reg-email').value.trim().toLowerCase();
-      const role=document.getElementById('reg-role').value;
-      const dept=document.getElementById('reg-dept').value;
-      const pw=document.getElementById('reg-password').value;
-      const confirm=document.getElementById('reg-confirm').value;
-      if (pw!==confirm) { showAuthError('register-error','Passwords do not match.'); return; }
+      e.preventDefault();
+      clearAuthMessages();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim().toLowerCase();
+      const role = document.getElementById('reg-role').value;
+      const dept = document.getElementById('reg-dept').value;
+      const pw = document.getElementById('reg-password').value;
+      const confirm = document.getElementById('reg-confirm').value;
 
-      // AJAX call to ASP.NET Core Web API Register endpoint
-      const apiRes = await API.register(name, email, role, dept, pw);
-      if (apiRes.ok) {
-        const ok=document.getElementById('register-success');
-        ok.textContent='Account created via ASP.NET API! Redirecting to sign in…'; ok.classList.add('show');
-        setTimeout(showLogin, 1500);
+      if (pw !== confirm) {
+        showAuthError('register-error', 'Passwords do not match.');
         return;
       }
 
-      if (demoAccounts.some(a=>a.email===email)||getRegisteredUsers().some(a=>a.email===email)) {
-        showAuthError('register-error', apiRes.data?.message || 'An account with this email already exists.'); return;
+      const apiRes = await API.register(name, email, role, dept, pw);
+      if (apiRes.ok && apiRes.data && apiRes.data.token) {
+        showAuthSuccess('register-success', 'Account created successfully! Redirecting to portal…');
+        const user = {
+          email: apiRes.data.email,
+          password: pw,
+          module: (apiRes.data.role || role).toLowerCase(),
+          name: apiRes.data.name,
+          role: apiRes.data.role,
+          initials: apiRes.data.initials,
+          department: apiRes.data.department
+        };
+        setSession(user);
+        applyUserToModule(user);
+        setTimeout(() => window.location.href = PAGE_FILE['dashboard'], 1000);
+        return;
       }
-      const account={ email,password:pw,module:role,name,role:role==='faculty'?'Faculty Member':'B.Tech Student',initials:getInitials(name),department:dept };
-      const list=getRegisteredUsers(); list.push(account); saveRegisteredUsers(list);
-      document.getElementById('register-form').reset();
-      const ok=document.getElementById('register-success');
-      ok.textContent='Account created! Redirecting to sign in…'; ok.classList.add('show');
-      setTimeout(showLogin, 1500);
+
+      showAuthError('register-error', apiRes.data?.message || 'Failed to create account. Please try again.');
+    }
+
+    async function handleSendOtp(e) {
+      e.preventDefault();
+      clearAuthMessages();
+      const email = document.getElementById('forgot-email').value.trim();
+      if (!email) {
+        showAuthError('forgot-error', 'Please enter your registered email.');
+        return;
+      }
+
+      const res = await API.sendOtp(email);
+      if (res.ok && res.data && res.data.success) {
+        showAuthSuccess('forgot-success', res.data.message || `OTP sent to ${email}. Check your inbox.`);
+        document.getElementById('otp-send-form').classList.add('d-none');
+        document.getElementById('otp-reset-form').classList.remove('d-none');
+        
+        if (res.data.devOtpCode) {
+          showToast(`Dev OTP Code: ${res.data.devOtpCode}`);
+          document.getElementById('otp-code').value = res.data.devOtpCode;
+        }
+      } else {
+        showAuthError('forgot-error', res.data?.message || 'Account not found with this email.');
+      }
+    }
+
+    async function handleResendOtp() {
+      clearAuthMessages();
+      const email = document.getElementById('forgot-email').value.trim();
+      const res = await API.resendOtp(email);
+      if (res.ok && res.data && res.data.success) {
+        showAuthSuccess('forgot-success', res.data.message || 'New OTP sent to your email.');
+        if (res.data.devOtpCode) {
+          showToast(`New OTP Code: ${res.data.devOtpCode}`);
+          document.getElementById('otp-code').value = res.data.devOtpCode;
+        }
+      } else {
+        showAuthError('forgot-error', res.data?.message || 'Failed to resend OTP.');
+      }
+    }
+
+    async function handleResetPassword(e) {
+      e.preventDefault();
+      clearAuthMessages();
+      const email = document.getElementById('forgot-email').value.trim();
+      const otpCode = document.getElementById('otp-code').value.trim();
+      const newPassword = document.getElementById('new-password').value;
+      const confirmPassword = document.getElementById('confirm-new-password').value;
+
+      if (newPassword !== confirmPassword) {
+        showAuthError('forgot-error', 'Passwords do not match.');
+        return;
+      }
+
+      const res = await API.resetPassword(email, otpCode, newPassword, confirmPassword);
+      if (res.ok && res.data && res.data.success) {
+        showAuthSuccess('forgot-success', 'Password reset successfully! Redirecting to sign in…');
+        setTimeout(() => {
+          showLogin();
+          document.getElementById('login-email').value = email;
+        }, 1500);
+      } else {
+        showAuthError('forgot-error', res.data?.message || 'Invalid or expired OTP code.');
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      let remembered=null;
-      try { remembered=localStorage.getItem('cms_remember'); } catch {}
-      if (remembered) { document.getElementById('login-email').value=remembered; document.getElementById('remember-me').checked=true; }
-      selectRole('admin');
+      let remembered = null;
+      try { remembered = localStorage.getItem('cms_remember'); } catch {}
+      if (remembered) {
+        document.getElementById('login-email').value = remembered;
+        document.getElementById('remember-me').checked = true;
+      }
     });
   </script>
   <script src="js/api.js"></script>
