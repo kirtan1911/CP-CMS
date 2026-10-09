@@ -43,7 +43,12 @@
 ## 🖥️ Dashboard Preview & Code Showcase
 
 ### 🎨 Visual Interface Preview
-![Northfield CMS Dashboard Preview](dashboard-preview.png)
+
+<p align="center">
+  <a href="dashboard-preview.png" target="_blank">
+    <img src="dashboard-preview.png" width="100%" alt="Northfield CMS Academic Dashboard UI Preview" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+  </a>
+</p>
 
 <br>
 
